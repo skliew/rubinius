@@ -88,6 +88,7 @@ web/doc/*/*.new
 
 # Ignore generated DTrace header
 vm/dtrace/probes.h
+vm/dtrace/hooks.h
 
 # Ignore rubygems except bundled ones
 vendor/cache/*

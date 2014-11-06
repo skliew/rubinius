@@ -5,6 +5,8 @@
 extern "C" {
 #endif
 
+#define RUBINIUS_METHOD_HOOK(probe, state, mod, method, previous) do { } while(0)
+
 #define RUBINIUS_METHOD_ENTRY_ENABLED() 0
 #define RUBINIUS_METHOD_ENTRY(arg0, arg1, arg2, arg3) do { } while(0)
 

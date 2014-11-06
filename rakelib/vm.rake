@@ -1,4 +1,5 @@
 require 'rakelib/instruction_parser'
+require 'rakelib/dtrace_header_generator'
 require 'rakelib/generator_task'
 require 'rakelib/release'
 
@@ -51,10 +52,13 @@ TYPE_GEN    = %w[ vm/gen/includes.hpp
 GENERATED = %W[ vm/gen/config_variables.h
                 vm/gen/signature.h
                 vm/dtrace/probes.h
+                vm/dtrace/hooks.h
                 #{encoding_database}
                 #{transcoders_database}
                 #{vm_release_h}
               ] + TYPE_GEN + INSN_GEN
+
+DTRACE_HOOKS = FileList.new('vm/dtrace/hooks/*.h')
 
 # Files are in order based on dependencies. For example,
 # CompactLookupTable inherits from Tuple, so the header
@@ -220,6 +224,16 @@ end
 file 'vm/dtrace/probes.h' do |t|
   if Rubinius::BUILD_CONFIG[:dtrace]
     sh %[dtrace -h -o vm/dtrace/probes.h -s vm/dtrace/probes.d]
+  end
+end
+
+file 'vm/dtrace/hooks.h' => DTRACE_HOOKS do |t|
+  if Rubinius::BUILD_CONFIG[:dtrace]
+    puts "GEN #{t.name}"
+
+    generator = DtraceHeaderGenerator.new(t.name)
+
+    generator.generate(t.prerequisites)
   end
 end
 
