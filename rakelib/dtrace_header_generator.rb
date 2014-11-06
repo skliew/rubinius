@@ -1,4 +1,4 @@
-# C header file generated that automatically escaped newlines. This is meant to
+# C header file generator that automatically escaped newlines. This is meant to
 # process header files containing DTrace related macros, removing the need to
 # manually escape every newline in said files.
 class DtraceHeaderGenerator
