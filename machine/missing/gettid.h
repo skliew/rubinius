@@ -6,6 +6,6 @@
 #include <sys/types.h>
 #else
 extern "C" {
-pid_t gettid(void);
+pid_t gettid(void) noexcept;
 }
 #endif

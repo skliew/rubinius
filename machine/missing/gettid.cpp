@@ -11,7 +11,8 @@
 #include <sys/syscall.h>
 #endif
 
-pid_t gettid(void) {
+extern "C" {
+pid_t gettid(void) noexcept {
 #if defined(__APPLE__)
   uint64_t tid;
   pthread_threadid_np(NULL, &tid);
@@ -27,5 +28,6 @@ pid_t gettid(void) {
 #else
   return 0;
 #endif
+}
 }
 #endif
